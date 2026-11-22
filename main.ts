@@ -8,7 +8,7 @@
 // Outside the grader's container:
 //   mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts
 
-import { copyFileSync, existsSync, mkdirSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const botDir = process.env.MAKEFUN_BOT_DIR ?? '/bot';
@@ -25,7 +25,16 @@ mkdirSync(outputDir, { recursive: true });
 
 try {
   copyFileSync(source, destination);
+
+  // Read the copy back, not the source, so the run proves the gate received it.
+  const handedIn = JSON.parse(readFileSync(destination, 'utf8')) as { url?: unknown };
+  if (typeof handedIn.url !== 'string' || handedIn.url.length === 0) {
+    throw new Error('VIDEO.json has no url string');
+  }
+
+  console.log(handedIn.url);
+  process.exit(0);
 } catch (error) {
-  console.error(`could not copy ${source} to ${destination}: ${(error as Error).message}`);
+  console.error(`could not hand in ${source}: ${(error as Error).message}`);
   process.exit(1);
 }
