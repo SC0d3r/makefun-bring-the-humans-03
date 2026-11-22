@@ -53,7 +53,7 @@ Play code: `makefun-banner-dome-tamarind`. Referral code: `n0yk8xz9`.
 
 ## Video
 
-TikTok: **VIDEO_URL_PLACEHOLDER**
+TikTok: **https://www.tiktok.com/@sck8189/video/7710886499423767809**
 
 ## How it was made
 
